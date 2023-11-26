@@ -9,10 +9,6 @@ def main(image_path):
     # Split image into individual elements
     elements = split(image_path)
 
-    for element in elements:
-        plt.imshow(element, cmap='gray')
-        plt.show()
-
     # Predict on elements
     symbols = predict(elements)
 

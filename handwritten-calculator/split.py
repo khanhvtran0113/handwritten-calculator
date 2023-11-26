@@ -1,15 +1,22 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+from PIL import Image
+
 
 
 def split(image_path):
 
     # Get image and resize
-    original_image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
-    aspect_ratio = original_image.shape[1] / original_image.shape[0]  # width/height
+    # original_image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+    original_image = Image.open(image_path).convert("L")
+    width = original_image.size[0]
+    height = original_image.size[1]
+    aspect_ratio = width / height  # width/height
+    new_size = (int(75*aspect_ratio), 75)
     # resize to dimensions of images in dataset in README
-    resized_image = cv2.resize(original_image, (int(75*aspect_ratio), 75))
+    resized_image_pil = resized_img = original_image.resize(new_size, Image.BICUBIC)
+    resized_image = np.array(resized_image_pil)
 
     # Convert to numpy array and normalize
     normalized_image = np.array(resized_image) / 255.0
@@ -22,6 +29,7 @@ def split(image_path):
 
     # Add extra channel (this is dirty and repeated logic)
     return np.expand_dims(padded_elements, axis=-1)
+
 
 
 def pad_elements(elements):
@@ -86,3 +94,4 @@ if __name__ == "__main__":
     for element in elements:
         plt.imshow(element, cmap='gray')
         plt.show()
+
