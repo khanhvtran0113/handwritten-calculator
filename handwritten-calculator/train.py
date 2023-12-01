@@ -36,7 +36,7 @@ def check_accuracy(model, X_test, y_test):
 
 def train_model(model, X_train, y_train, X_val, y_val):
     model.fit(X_train, y_train,
-              epochs=1,
+              epochs=7,
               batch_size=32,
               validation_data=(X_val, y_val)
               )

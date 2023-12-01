@@ -8,21 +8,21 @@ from PIL import Image
 def split(image_path):
 
     # Get image and resize
-    # original_image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
     original_image = Image.open(image_path).convert("L")
     width = original_image.size[0]
     height = original_image.size[1]
     aspect_ratio = width / height  # width/height
     new_size = (int(75*aspect_ratio), 75)
     # resize to dimensions of images in dataset in README
-    resized_image_pil = resized_img = original_image.resize(new_size, Image.BICUBIC)
-    resized_image = np.array(resized_image_pil)
+    resized_image_pil = original_image.resize(new_size, Image.BICUBIC)
 
-    # Convert to numpy array and normalize
-    normalized_image = np.array(resized_image) / 255.0
+    # Convert to black and white and normalize
+    threshold = 160
+    bw_image_pil = resized_image_pil.point(lambda x: 0 if x < threshold else 255)
+    bw_image_normalized = np.array(bw_image_pil) / 255
 
     # Get each part of expression
-    elements = get_individual_elements(normalized_image)
+    elements = get_individual_elements(bw_image_normalized)
 
     # Add padding to elements (so every image is 75 by 75)
     padded_elements = pad_elements(elements)

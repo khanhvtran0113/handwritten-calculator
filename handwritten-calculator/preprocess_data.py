@@ -5,7 +5,7 @@ import numpy as np
 from _util import load_image, normalize_images, one_hot_encode, PICKLE_FOLDER
 
 IMAGES_FOLDER = "/Users/khanhtran/Desktop/archive/symbols/"
-TRAIN_SIZE, VAL_SIZE, TEST_SIZE = 0.6, 0.2, 0.2
+TRAIN_SIZE, VAL_SIZE, TEST_SIZE = 0.8, 0.1, 0.1
 # SEED set to 1 to achieve reproducibility
 SEED = 1
 
