@@ -5,10 +5,10 @@ from PIL import Image
 
 
 
-def split(image_path):
+def split(image):
 
     # Get image and resize
-    original_image = Image.open(image_path).convert("L")
+    original_image = Image.open(image).convert("L")
     width = original_image.size[0]
     height = original_image.size[1]
     aspect_ratio = width / height  # width/height
@@ -26,6 +26,10 @@ def split(image_path):
 
     # Add padding to elements (so every image is 75 by 75)
     padded_elements = pad_elements(elements)
+
+    for element in padded_elements:
+        plt.imshow(element, cmap='gray')
+        plt.show()
 
     # Add extra channel (this is dirty and repeated logic)
     return np.expand_dims(padded_elements, axis=-1)
